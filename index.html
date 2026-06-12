@@ -1,1 +1,121 @@
-# achaservico
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Quality Profissionais</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f0f0; margin: 0; }
+    .cabecalho { background: #1D9E75; color: white; padding: 30px; text-align: center; }
+    .busca { margin-top: 15px; display: flex; justify-content: center; gap: 8px; }
+    .busca input { padding: 10px 16px; border-radius: 8px; border: none; font-size: 15px; width: 300px; }
+    .busca button { padding: 10px 20px; background: #085041; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; }
+    .conteudo { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+    .grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card { background: white; border-radius: 10px; padding: 20px; }
+    .card h3 { color: #1D9E75; margin-bottom: 8px; }
+    .card p { color: #555; margin: 4px 0; }
+    .etiqueta { display: inline-block; background: #E1F5EE; color: #0F6E56; font-size: 12px; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; }
+    .btn-contato { display: block; width: 100%; margin-top: 14px; padding: 10px; background: #1D9E75; color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; }
+
+        /* Card oculto pela busca */
+    .card.oculto { display: none; }
+
+        /* Mensagem quando nada é encontrado */
+    #sem-resultado { display: none; text-align: center; color: #888; margin-top: 40px; font-size: 16px; }
+  </style>
+</head>
+
+<body>
+
+  <div class="cabecalho">
+    <h1>Quality Profissionais</h1>
+    <p>Encontre bons profissionais perto de você</p>
+    <div class="busca">
+            <!-- id="campo-busca": nome único para o JS encontrar este input -->
+      <input id="campo-busca" type="text" placeholder="Ex: eletricista, pintor...">
+            <!-- onclick="filtrar()": chama a função JS ao clicar -->
+      <button onclick="filtrar()">Buscar</button>
+    </div>
+  </div>
+
+  <div class="conteudo">
+    <h2>Profissionais disponíveis</h2>
+    <div class="grade">
+
+            <!-- data-profissao: dado extra que o JS vai ler para filtrar -->
+      <div class="card" data-profissao="eletricista">
+        <span class="etiqueta">Eletricista</span>
+        <h3>João Oliveira</h3>
+        <p>⭐ 5.0 • 48 avaliações</p>
+        <p>📍 3 km de distância</p>
+        <p>💰 R$ 80 / hora</p>
+        <button class="btn-contato">Ver perfil</button>
+      </div>
+
+      <div class="card" data-profissao="eletricista">
+        <span class="etiqueta">Eletricista</span>
+        <h3>Maria Santos</h3>
+        <p>⭐ 4.5 • 31 avaliações</p>
+        <p>📍 5 km de distância</p>
+        <p>💰 R$ 70 / hora</p>
+        <button class="btn-contato">Ver perfil</button>
+      </div>
+
+      <div class="card" data-profissao="pedreiro">
+        <span class="etiqueta">Pedreiro</span>
+        <h3>Roberto Lima</h3>
+        <p>⭐ 4.0 • 7 avaliações</p>
+        <p>📍 8 km de distância</p>
+        <p>💰 R$ 60 / hora</p>
+        <button class="btn-contato">Ver perfil</button>
+      </div>
+        <!-- Card adicional -->
+      <div class="card" data-profissao="pintor">
+        <span class="etiqueta">Pintor</span>
+        <h3>Mateus Medeiros</h3>
+        <p>⭐ 5.0 • 18 avaliações</p>
+        <p>📍 2 km de distância</p>
+        <p>💰 R$ 100 / hora</p>
+        <button class="btn-contato"> Ver Perfil</button>
+
+      </div>
+
+    </div>
+    <p id="sem-resultado">Nenhum profissional encontrado.</p>
+  </div>
+
+  <!-- JAVASCRIPT: fica sempre no final do arquivo -->
+  <script>
+    function filtrar() {
+
+            // Pega o texto digitado e deixa tudo minúsculo
+      const busca = document.getElementById("campo-busca").value.toLowerCase();
+
+            // Pega todos os elementos com class="card"
+      const cards = document.querySelectorAll(".card");
+
+      let encontrou = false;
+
+            // Percorre cada card um por um
+      cards.forEach(function(card) {
+
+                // Lê o valor de data-profissao do card
+        const profissao = card.getAttribute("data-profissao");
+
+                // Verifica se a profissão contém o texto buscado
+        if (profissao.includes(busca)) {
+          card.classList.remove("oculto");   // mostra o card
+          encontrou = true;
+        } else {
+          card.classList.add("oculto");      // esconde o card
+        }
+      });
+
+            // Mostra mensagem se nenhum card foi encontrado
+      const msg = document.getElementById("sem-resultado");
+      msg.style.display = encontrou ? "none" : "block";
+    }
+  </script>
+
+</body>
+</html>
